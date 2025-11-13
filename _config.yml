@@ -1,0 +1,11 @@
+# GitHub Pages Configuration
+title: Matheus Virgilio - Portfolio
+description: Personal portfolio and resume website
+theme: jekyll-theme-minimal
+plugins:
+  - jekyll-feed
+
+# If you want to use a custom domain, uncomment and set:
+# url: "https://yourdomain.com"
+# baseurl: ""
+
