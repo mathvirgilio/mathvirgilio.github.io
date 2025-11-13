@@ -1,855 +1,191 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matheus Virgilio - Portfolio</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --black: #000000;
-            --white: #ffffff;
-            --gray: #808080;
-            --border-thick: 8px;
-            --border-medium: 4px;
-            --border-thin: 2px;
-        }
-
-        body {
-            font-family: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
-            line-height: 1.5;
-            color: var(--black);
-            background-color: var(--white);
-            overflow-x: hidden;
-            font-weight: 500;
-        }
-
-        /* Scrollbar styling */
-        ::-webkit-scrollbar {
-            width: 12px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--white);
-            border-left: var(--border-thin) solid var(--black);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--black);
-            border: var(--border-thin) solid var(--white);
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 40px;
-        }
-
-        /* Geometric Pattern Background */
-        .geometric-bg {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0.05;
-            background-image: 
-                repeating-linear-gradient(45deg, transparent, transparent 10px, var(--black) 10px, var(--black) 20px),
-                repeating-linear-gradient(-45deg, transparent, transparent 10px, var(--black) 10px, var(--black) 20px);
-            pointer-events: none;
-        }
-
-        /* Header */
-        header {
-            background: var(--white);
-            color: var(--black);
-            padding: 100px 0;
-            text-align: center;
-            position: relative;
-            border-bottom: var(--border-thick) solid var(--black);
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 60px;
-            background: repeating-linear-gradient(
-                90deg,
-                var(--black) 0px,
-                var(--black) 20px,
-                var(--white) 20px,
-                var(--white) 40px
-            );
-        }
-
-        header .container {
-            position: relative;
-            z-index: 1;
-        }
-
-        header h1 {
-            font-size: 6rem;
-            margin-bottom: 20px;
-            font-weight: 700;
-            color: var(--black);
-            text-transform: uppercase;
-            letter-spacing: -2px;
-            line-height: 1;
-        }
-
-        header p {
-            font-size: 1.8rem;
-            color: var(--black);
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-
-        /* Navigation */
-        nav {
-            background: var(--white);
-            border-bottom: var(--border-medium) solid var(--black);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            padding: 0;
-            margin: 0;
-        }
-
-        nav ul li {
-            margin: 0;
-            border-right: var(--border-thin) solid var(--black);
-        }
-
-        nav ul li:last-child {
-            border-right: none;
-        }
-
-        nav ul li a {
-            color: var(--black);
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1rem;
-            display: block;
-            padding: 25px 40px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: all 0.2s;
-            position: relative;
-        }
-
-        nav ul li a:hover {
-            background: var(--black);
-            color: var(--white);
-        }
-
-        nav ul li a:active {
-            background: var(--gray);
-        }
-
-        /* Sections */
-        section {
-            padding: 80px 0;
-            position: relative;
-            background: var(--white);
-        }
-
-        section:nth-child(even) {
-            background: var(--black);
-            color: var(--white);
-        }
-
-        section:nth-child(even) .section-title,
-        section:nth-child(even) h3,
-        section:nth-child(even) .timeline-item h3,
-        section:nth-child(even) .timeline-item .company {
-            color: var(--white);
-        }
-
-        section:nth-child(even) .timeline-item {
-            background: var(--white);
-            color: var(--black);
-            border-color: var(--white);
-        }
-
-        section:nth-child(even) .timeline-item h3,
-        section:nth-child(even) .timeline-item p {
-            color: var(--black);
-        }
-
-        .section-title {
-            font-size: 5rem;
-            margin-bottom: 60px;
-            text-align: left;
-            color: var(--black);
-            position: relative;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: -3px;
-            line-height: 1;
-            padding: 20px 0;
-            border-bottom: var(--border-thick) solid var(--black);
-        }
-
-        section:nth-child(even) .section-title {
-            border-bottom-color: var(--white);
-        }
-
-        /* About Section */
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 60px;
-            align-items: start;
-        }
-
-        .profile-image {
-            width: 100%;
-            max-width: 400px;
-            aspect-ratio: 1;
-            border: var(--border-thick) solid var(--black);
-            margin: 0 auto;
-            display: block;
-            background: var(--white);
-            object-fit: cover;
-            position: relative;
-        }
-
-        .profile-image::after {
-            content: '';
-            position: absolute;
-            top: -20px;
-            left: -20px;
-            width: 100%;
-            height: 100%;
-            border: var(--border-thick) solid var(--black);
-            z-index: -1;
-        }
-
-        .about-text {
-            font-size: 1.3rem;
-            line-height: 1.8;
-            color: var(--black);
-            font-weight: 400;
-        }
-
-        .about-text p {
-            margin-bottom: 30px;
-        }
-
-        section:nth-child(even) .about-text {
-            color: var(--white);
-        }
-
-        /* Experience & Education */
-        .timeline {
-            position: relative;
-            padding-left: 40px;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: var(--border-thick);
-            background: var(--black);
-        }
-
-        section:nth-child(even) .timeline::before {
-            background: var(--white);
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 40px;
-            padding: 40px;
-            background: var(--white);
-            border: var(--border-thick) solid var(--black);
-            margin-left: 40px;
-            transition: all 0.2s;
-        }
-
-        section:nth-child(even) .timeline-item {
-            background: var(--white);
-            border-color: var(--white);
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -60px;
-            top: 40px;
-            width: 40px;
-            height: 40px;
-            background: var(--black);
-            border: var(--border-thick) solid var(--white);
-        }
-
-        section:nth-child(even) .timeline-item::before {
-            background: var(--white);
-            border-color: var(--black);
-        }
-
-        .timeline-item:hover {
-            transform: translateX(10px);
-            box-shadow: -10px 10px 0 var(--black);
-        }
-
-        section:nth-child(even) .timeline-item:hover {
-            box-shadow: -10px 10px 0 var(--white);
-        }
-
-        .timeline-item h3 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            color: var(--black);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: -1px;
-        }
-
-        .timeline-item .company {
-            color: var(--black);
-            font-weight: 700;
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .timeline-item .date {
-            color: var(--black);
-            font-size: 1rem;
-            margin-bottom: 20px;
-            font-weight: 500;
-            font-family: 'JetBrains Mono', monospace;
-            text-transform: uppercase;
-        }
-
-        .timeline-item p {
-            color: var(--black);
-            line-height: 1.8;
-            font-size: 1.1rem;
-        }
-
-        /* Skills */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
-
-        .skill-category {
-            background: var(--white);
-            padding: 40px;
-            border: var(--border-thick) solid var(--black);
-            transition: all 0.2s;
-            position: relative;
-        }
-
-        section:nth-child(even) .skill-category {
-            background: var(--white);
-            border-color: var(--white);
-        }
-
-        .skill-category::before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            width: 100%;
-            height: 100%;
-            border: var(--border-thick) solid var(--black);
-            z-index: -1;
-        }
-
-        section:nth-child(even) .skill-category::before {
-            border-color: var(--white);
-        }
-
-        .skill-category:hover {
-            transform: translate(-10px, -10px);
-            box-shadow: 10px 10px 0 var(--black);
-        }
-
-        section:nth-child(even) .skill-category:hover {
-            box-shadow: 10px 10px 0 var(--white);
-        }
-
-        .skill-category h3 {
-            color: var(--black);
-            margin-bottom: 30px;
-            font-size: 1.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            border-bottom: var(--border-medium) solid var(--black);
-            padding-bottom: 15px;
-        }
-
-        .skill-list {
-            list-style: none;
-        }
-
-        .skill-list li {
-            padding: 15px 0;
-            color: var(--black);
-            border-bottom: var(--border-thin) solid var(--black);
-            position: relative;
-            padding-left: 0;
-            font-size: 1.2rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .skill-list li::before {
-            content: '■';
-            margin-right: 15px;
-            color: var(--black);
-        }
-
-        .skill-list li:last-child {
-            border-bottom: none;
-        }
-
-        /* Projects */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-        }
-
-        .project-card {
-            background: var(--white);
-            overflow: visible;
-            border: var(--border-thick) solid var(--black);
-            transition: all 0.2s;
-            position: relative;
-        }
-
-        section:nth-child(even) .project-card {
-            background: var(--white);
-            border-color: var(--white);
-        }
-
-        .project-card:hover {
-            transform: translate(-10px, -10px);
-            box-shadow: 10px 10px 0 var(--black);
-        }
-
-        section:nth-child(even) .project-card:hover {
-            box-shadow: 10px 10px 0 var(--white);
-        }
-
-        .project-card h3 {
-            padding: 30px;
-            background: var(--black);
-            color: var(--white);
-            margin: 0;
-            font-size: 1.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            border-bottom: var(--border-thick) solid var(--black);
-        }
-
-        section:nth-child(even) .project-card h3 {
-            background: var(--white);
-            color: var(--black);
-            border-bottom-color: var(--white);
-        }
-
-        .project-card .project-content {
-            padding: 40px;
-        }
-
-        .project-card p {
-            color: var(--black);
-            margin-bottom: 30px;
-            line-height: 1.8;
-            font-size: 1.1rem;
-        }
-
-        .project-links {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .project-links a {
-            color: var(--black);
-            text-decoration: none;
-            font-weight: 700;
-            transition: all 0.2s;
-            padding: 15px 30px;
-            border: var(--border-thick) solid var(--black);
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            display: inline-block;
-        }
-
-        .project-links a:hover {
-            background: var(--black);
-            color: var(--white);
-        }
-
-        /* Contact */
-        .contact-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
-
-        .contact-item {
-            padding: 50px 40px;
-            background: var(--white);
-            border: var(--border-thick) solid var(--black);
-            transition: all 0.2s;
-            position: relative;
-            text-align: center;
-        }
-
-        section:nth-child(even) .contact-item {
-            background: var(--white);
-            border-color: var(--white);
-        }
-
-        .contact-item:hover {
-            transform: translate(-5px, -5px);
-            box-shadow: 5px 5px 0 var(--black);
-        }
-
-        section:nth-child(even) .contact-item:hover {
-            box-shadow: 5px 5px 0 var(--white);
-        }
-
-        .contact-item h3 {
-            color: var(--black);
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            border-bottom: var(--border-medium) solid var(--black);
-            padding-bottom: 15px;
-        }
-
-        .contact-item a {
-            color: var(--black);
-            text-decoration: none;
-            transition: all 0.2s;
-            font-weight: 500;
-            font-size: 1.1rem;
-            display: block;
-        }
-
-        .contact-item a:hover {
-            font-weight: 700;
-            text-decoration: underline;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--black);
-            color: var(--white);
-            text-align: center;
-            padding: 60px 0;
-            border-top: var(--border-thick) solid var(--black);
-        }
-
-        footer p {
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            font-size: 0.9rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container {
-                padding: 0 20px;
-            }
-
-            header {
-                padding: 60px 0;
-            }
-
-            header h1 {
-                font-size: 3rem;
-            }
-
-            header p {
-                font-size: 1.2rem;
-                letter-spacing: 1px;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-
-            .section-title {
-                font-size: 3rem;
-                letter-spacing: -2px;
-            }
-
-            .timeline {
-                padding-left: 30px;
-            }
-
-            .timeline-item {
-                margin-left: 30px;
-                padding: 30px 20px;
-            }
-
-            .timeline-item::before {
-                left: -50px;
-                width: 30px;
-                height: 30px;
-            }
-
-            nav ul {
-                flex-direction: column;
-            }
-
-            nav ul li {
-                border-right: none;
-                border-bottom: var(--border-thin) solid var(--black);
-                width: 100%;
-            }
-
-            nav ul li:last-child {
-                border-bottom: none;
-            }
-
-            nav ul li a {
-                padding: 20px;
-            }
-
-            .projects-grid,
-            .skills-grid,
-            .contact-info {
-                grid-template-columns: 1fr;
-            }
-
-            .skill-category,
-            .project-card,
-            .contact-item {
-                padding: 30px 20px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="container">
-            <h1>Matheus Virgilio</h1>
-            <p>Software Developer | Full Stack Engineer</p>
-        </div>
-    </header>
-
-    <nav>
-        <div class="container">
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#education">Education</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <section id="about">
-        <div class="container">
-            <h2 class="section-title">About</h2>
-            <div class="about-content">
-                <img src="https://via.placeholder.com/300" alt="Profile Picture" class="profile-image">
-                <div class="about-text">
-                    <p>
-                        Welcome to my portfolio! I'm a passionate software developer with experience in 
-                        building modern web applications and solving complex problems. I enjoy working 
-                        with cutting-edge technologies and continuously learning new skills.
-                    </p>
-                    <p>
-                        My journey in technology has been driven by curiosity and a desire to create 
-                        impactful solutions. I believe in writing clean, maintainable code and following 
-                        best practices to deliver high-quality software.
-                    </p>
-                </div>
+<header>
+    <div class="container">
+        <h1>Matheus Virgilio</h1>
+        <p>AI Researcher | Software & Data Engineer</p>
+    </div>
+</header>
+
+<nav>
+    <div class="container">
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<section id="about">
+    <div class="container">
+        <h2 class="section-title">About</h2>
+        <div class="about-content">
+            <img src="https://via.placeholder.com/300" alt="Profile Picture" class="profile-image">
+            <div class="about-text">
+                <p>
+                    I am a highly dedicated, organized, and creative professional with solid experience in Artificial Intelligence and a strong interest in Data Science, Robotics, and Automation. My background includes projects involving image processing and computer vision for analyzing and enhancing medical and satellite images.
+                </p>
+                <p>
+                    I have experience developing AI solutions for predictive analysis, language model optimization, and Natural Language Processing (NLP) — including automatic report generation, Retrieval-Augmented Generation (RAG), and pattern recognition in complex datasets.
+                </p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section id="experience">
-        <div class="container">
-            <h2 class="section-title">Experience</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <h3>Job Title</h3>
-                    <div class="company">Company Name</div>
-                    <div class="date">Month Year - Present</div>
-                    <p>
-                        Description of your role and responsibilities. Highlight key achievements 
-                        and technologies used.
-                    </p>
-                </div>
-                <div class="timeline-item">
-                    <h3>Previous Job Title</h3>
-                    <div class="company">Previous Company</div>
-                    <div class="date">Month Year - Month Year</div>
-                    <p>
-                        Description of your previous role and accomplishments.
-                    </p>
-                </div>
+<section id="experience">
+    <div class="container">
+        <h2 class="section-title">Experience</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <h3>Junior Data Scientist</h3>
+                <div class="company">DHARMA-AI</div>
+                <div class="date">Mar 2025 – Aug 2025</div>
+                <p>
+                    Research and development of AI solutions, including OCR tools for document information extraction, a language model for nautical report generation, and a Retrieval-Augmented Generation (RAG) model for public query systems.
+                </p>
+            </div>
+            <div class="timeline-item">
+                <h3>Researcher</h3>
+                <div class="company">GPDS - University of Brasília</div>
+                <div class="date">Feb 2023 – Present</div>
+                <p>
+                    Development of a diagnostic and prediction system for systemic diseases using dental radiographs. Work includes detection and segmentation networks (EfficientNet, UNet) and NLP models for automated medical report generation.
+                </p>
+            </div>
+            <div class="timeline-item">
+                <h3>Researcher</h3>
+                <div class="company">UIoT - University of Brasília</div>
+                <div class="date">Oct 2022 – Aug 2023</div>
+                <p>
+                    Developed a GPS signal sampling control system based on autoencoders for the AMORIS Project, an IoT-based control platform supporting solidarity actions during outbreaks.
+                </p>
+            </div>
+            <div class="timeline-item">
+                <h3>Intern</h3>
+                <div class="company">CENSIPAM – Amazon Protection System</div>
+                <div class="date">Sep 2021 – Jan 2023</div>
+                <p>
+                    Developed machine learning and image segmentation models for deforestation detection and wildfire prediction using multispectral satellite imagery under diverse weather conditions.
+                </p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section id="education">
-        <div class="container">
-            <h2 class="section-title">Education</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <h3>Degree Name</h3>
-                    <div class="company">University Name</div>
-                    <div class="date">Year - Year</div>
+<section id="education">
+    <div class="container">
+        <h2 class="section-title">Education</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <h3>Master’s Student in Informatics</h3>
+                <div class="company">University of Brasília</div>
+                <div class="date">2025 – Present</div>
+                <p>Graduate Program in Informatics (PPGI), focusing on AI and computer vision systems.</p>
+            </div>
+            <div class="timeline-item">
+                <h3>Bachelor’s Degree in Mechatronic Engineering</h3>
+                <div class="company">University of Brasília</div>
+                <div class="date">2018 – 2024</div>
+                <p>Graduation project on medical image analysis and automation systems using neural networks.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="skills">
+    <div class="container">
+        <h2 class="section-title">Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <h3>Programming</h3>
+                <ul class="skill-list">
+                    <li>Python</li>
+                    <li>C / C++</li>
+                    <li>SQL</li>
+                    <li>MATLAB</li>
+                    <li>Linux</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>AI & Robotics</h3>
+                <ul class="skill-list">
+                    <li>Machine Learning</li>
+                    <li>Computer Vision</li>
+                    <li>Object Detection & Segmentation (YOLO, UNet, EfficientNet)</li>
+                    <li>Transformers & LLMs</li>
+                    <li>Mobile Robotics & Localization</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>Tools & Frameworks</h3>
+                <ul class="skill-list">
+                    <li>Visual Studio Code / Cursor / Jupyter</li>
+                    <li>Docker / Git / AWS</li>
+                    <li>AutoCAD / CoppeliaSim / ROS</li>
+                    <li>Arduino / Automation Studio</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="projects">
+    <div class="container">
+        <h2 class="section-title">Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <h3>GigaSistêmica Project</h3>
+                <div class="project-content">
                     <p>
-                        Relevant coursework, achievements, or honors.
+                        AI-based diagnostic system for identifying systemic diseases in dental radiographs. Combines image segmentation (EfficientNet, UNet) and language models for automated medical report generation.
                     </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="skills">
-        <div class="container">
-            <h2 class="section-title">Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3>Programming Languages</h3>
-                    <ul class="skill-list">
-                        <li>JavaScript</li>
-                        <li>Python</li>
-                        <li>Java</li>
-                        <li>TypeScript</li>
-                    </ul>
-                </div>
-                <div class="skill-category">
-                    <h3>Frameworks & Libraries</h3>
-                    <ul class="skill-list">
-                        <li>React</li>
-                        <li>Node.js</li>
-                        <li>Express</li>
-                        <li>Django</li>
-                    </ul>
-                </div>
-                <div class="skill-category">
-                    <h3>Tools & Technologies</h3>
-                    <ul class="skill-list">
-                        <li>Git</li>
-                        <li>Docker</li>
-                        <li>AWS</li>
-                        <li>MongoDB</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="projects">
-        <div class="container">
-            <h2 class="section-title">Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <h3>Project Name</h3>
-                    <div class="project-content">
-                        <p>
-                            Brief description of the project, technologies used, and key features.
-                        </p>
-                        <div class="project-links">
-                            <a href="#" target="_blank">GitHub</a>
-                            <a href="#" target="_blank">Live Demo</a>
-                        </div>
+                    <div class="project-links">
+                        <a href="https://github.com/mathvirgilio" target="_blank">GitHub</a>
                     </div>
                 </div>
-                <div class="project-card">
-                    <h3>Another Project</h3>
-                    <div class="project-content">
-                        <p>
-                            Brief description of another project showcasing your skills.
-                        </p>
-                        <div class="project-links">
-                            <a href="#" target="_blank">GitHub</a>
-                            <a href="#" target="_blank">Live Demo</a>
-                        </div>
+            </div>
+            <div class="project-card">
+                <h3>Hospital Robot Navigation System</h3>
+                <div class="project-content">
+                    <p>
+                        Developed a navigation and decontamination robot using Kalman filters, scan-matching, and bioinspired optimization algorithms.
+                    </p>
+                    <div class="project-links">
+                        <a href="https://github.com/mathvirgilio" target="_blank">GitHub</a>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section id="contact">
-        <div class="container">
-            <h2 class="section-title">Contact</h2>
-            <div class="contact-info">
-                <div class="contact-item">
-                    <h3>Email</h3>
-                    <a href="mailto:your.email@example.com">your.email@example.com</a>
-                </div>
-                <div class="contact-item">
-                    <h3>LinkedIn</h3>
-                    <a href="https://linkedin.com/in/yourprofile" target="_blank">linkedin.com/in/yourprofile</a>
-                </div>
-                <div class="contact-item">
-                    <h3>GitHub</h3>
-                    <a href="https://github.com/mathvirgilio" target="_blank">github.com/mathvirgilio</a>
-                </div>
+<section id="contact">
+    <div class="container">
+        <h2 class="section-title">Contact</h2>
+        <div class="contact-info">
+            <div class="contact-item">
+                <h3>Email</h3>
+                <a href="mailto:matheusvirgiliomcp@gmail.com">matheusvirgiliomcp@gmail.com</a>
+            </div>
+            <div class="contact-item">
+                <h3>LinkedIn</h3>
+                <a href="https://br.linkedin.com/in/matheus-virgílio-da-silva-ferreira-073545156" target="_blank">
+                    linkedin.com/in/matheus-virgílio-da-silva-ferreira
+                </a>
+            </div>
+            <div class="contact-item">
+                <h3>GitHub</h3>
+                <a href="https://github.com/mathvirgilio" target="_blank">github.com/mathvirgilio</a>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Matheus Virgilio. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-    </script>
-</body>
-</html>
-
+<footer>
+    <div class="container">
+        <p>&copy; 2025 Matheus Virgilio. All rights reserved.</p>
+    </div>
+</footer>
